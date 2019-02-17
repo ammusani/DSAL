@@ -11,17 +11,19 @@ struct BTNode {
 
 class binTree {
     struct BTNode *start;
-    
+    int maxLoc;
+
     public:
         void genTree(string);
-        //void printInOrder();
-        //void printInOrder(struct BTNode *n);
+        void printLeftView();
+        void printLeftView(struct BTNode*, int);
         void printInOrder();
         void printInOrder(struct BTNode *n);
 };
 
 void binTree :: genTree(string c) {
     stack<struct BTNode*> s;
+    maxLoc = 0;
     struct BTNode *node;
     for(auto i = c.begin(); i < c.end(); i++) {
         node = new BTNode;
@@ -51,6 +53,23 @@ void binTree :: genTree(string c) {
     }
 }
 
+void binTree :: printLeftView() {
+    if(start == NULL) return;
+    if(maxLoc == 0) printf("%c ", start -> data);
+    if(start -> left != NULL) printLeftView(start -> left, 1);
+    if(start -> right != NULL) printLeftView(start -> right, 1);
+}
+
+void binTree :: printLeftView(struct BTNode *n, int p) {
+    if(n == NULL) return;
+    if(p > maxLoc) {
+        printf("%c ", n -> data);
+        maxLoc = p;
+    }
+    if(n -> left != NULL) printLeftView(n -> left, p + 1);
+    if(n -> right != NULL) printLeftView(n -> right, p + 1);
+}
+
 void binTree :: printInOrder() {
     if(start == NULL) return;
     if(start -> left != NULL) printInOrder(start -> left);
@@ -76,8 +95,9 @@ int main() {
         //cout << z;
         f.genTree(z);
         //cout << z;
-        f.printInOrder();
+        //f.printInOrder();
+        //puts("");
+        f.printLeftView();
         puts("");
     }
-    return 0;
 }
