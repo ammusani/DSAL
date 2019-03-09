@@ -1,3 +1,124 @@
+//This problems converts a binary tree generated with a given program into a BST by adding to function and add in-order, pre-order traversal function to it.
+
+//The original code is commented below after which the final submitted code is written
+
+// #include <iostream>
+// using namespace std;
+
+// struct node
+// {
+// 	int data;
+// 	node *left,*right;
+// };
+
+// class binaryTree
+// {
+// 	private:
+// 		node *root;
+	
+// 	public:
+// 		binaryTree()
+// 		{
+// 			root = NULL;
+// 		}
+
+// 		void createTree(int *input,int *randomInput,int total_nodes)
+// 		{
+// 			int j = 0;
+// 			for(int i=0;i<total_nodes;i++)
+// 			{
+// 				insertNode(input[i],randomInput,&j);
+// 			}
+// 		}
+
+// 		void insertNode(int key,int *randomInput, int *j)
+// 		{
+// 			node *temp = new node();
+// 			temp->data = key;
+// 			temp->right = NULL;
+// 			temp->left = NULL;
+
+// 			if(root!=NULL)
+// 			{
+// 				bool inserted = false;
+// 				node *p = root;
+// 				while(!(inserted))
+// 				{
+// 					int currRandom = randomInput[*j];
+// 					*j = *j + 1;
+
+// 					if(currRandom == 0)
+// 					{
+// 						if(p->left == NULL)
+// 						{
+// 							p->left = temp;
+// 							inserted = true;
+// 						}
+// 						else
+// 						{
+// 							p = p->left;
+// 						}
+// 					}
+// 					else
+// 					{
+// 						if(p->right == NULL)
+// 						{
+// 							p->right = temp;
+// 							inserted = true;
+// 						}
+// 						else
+// 						{
+// 							p = p->right;
+// 						}
+// 					}
+// 				}	
+// 			}	
+// 			else
+// 			{
+// 				root = temp;
+// 			}	
+// 		}
+
+// 		void toBST()
+// 		{
+// 			/* Write Function Definition */
+// 		}
+// 		void inorder()
+// 		{
+// 			/* Write Function Definition */
+// 		}
+// 		void preorder()
+// 		{
+// 			/* Write Function Definition */
+// 		}
+// };
+
+// int main()
+// {
+// 	binaryTree T;
+// 	int total_nodes,seq_size,*input,*randomInput;
+// 	cin>>total_nodes>>seq_size;
+
+// 	input = (int*)malloc(sizeof(int)*total_nodes);
+// 	randomInput = (int*)malloc(sizeof(int)*seq_size);
+
+// 	for(int i=0;i<total_nodes;i++)
+// 	{
+// 		cin>>input[i];
+// 	}
+
+// 	for(int i=0;i<seq_size;i++)
+// 	{
+// 		cin>>randomInput[i];
+// 	}
+
+// 	T.createTree(input,randomInput,total_nodes);
+// 	T.toBST();
+// 	T.inorder();
+// 	T.preorder();
+
+// }
+
 #include <iostream>
 #include <bits/stdc++.h>
 
@@ -79,13 +200,13 @@ class binaryTree {
 		}
 
 		void toBST() {
-			stack<struct node*> s;
-            struct node *p = root;
-            vector<int> v;
+			stack<struct node*> s;				//creating a stack of node for inOrder and  preOrder non recursive traversal, idea is to perform a pre-Order traversal get all elements in the tree, store it into an vector, apply sorting on it and the go on inserting each element in the tree using a in-Order traversal
+            struct node *p = root;				//a node
+            vector<int> v;						//vector to store all numbers
 
             if(p != NULL) s.push(p);
             
-            while(!s.empty()) {
+            while(!s.empty()) {					//pre-order traversal to get all elements
                 p = s.top();
                 s.pop();
                 v.push_back(p -> data);
@@ -93,7 +214,7 @@ class binaryTree {
                 if(p -> left != NULL) s.push(p -> left);
             }
 
-            sort(v.begin(), v.end());
+            sort(v.begin(), v.end());			//sorting the  vector
 
             p = root;
             if(p != NULL) s.push(p);
@@ -101,15 +222,15 @@ class binaryTree {
             vector<int> :: iterator ptr;
             ptr = v.begin();
 
-            while(!s.empty()) {
+            while(!s.empty()) {					//inserting the elements in again
                 p = s.top();
                 s.pop();
-                if(p -> inOrderVisited == 1) {
+                if(p -> inOrderVisited == 1) {	//having another counter which marks whether an element is visited or not, if visted changing its data and removing it from stack and making the flag not visited again so whenver the traversal is performed it is not visited
                     p -> data = *ptr;
                     ptr++;
                     p -> inOrderVisited = 0;
                 }
-                else {
+                else {							//if not visited inserting in in-order manner and marking it visited
                     if(p -> right != NULL) s.push(p -> right);
                     p -> inOrderVisited = 1;
                     s.push(p);
@@ -155,3 +276,6 @@ int main() {
     puts("");
     return 0;
 }
+
+
+//Note: I have commented only on my code.
