@@ -1,4 +1,4 @@
-//This program solves the malWart problem on hackerrank. I will add the pdf as soon as possible.
+//This program solves the malWart problem on hackerrank. Description in MalWart.pdf
 
 #include <iostream>
 #include <bits/stdc++.h>
