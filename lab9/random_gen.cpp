@@ -1,6 +1,8 @@
 #include<iostream>
 #include<stdlib.h>
 #include<stdio.h>
+#include<time.h>
+
 using namespace std;
 
 int main() {
@@ -10,7 +12,7 @@ int main() {
 	FILE *rnd;
 
 	rnd = fopen("random.txt", "w");
-	for(int i = 0; i < 100000; i++) {
+	for(int i = 0; i < 1000000; i++) {
 		fprintf(rnd, "%d\n", rand());
 	}
 
